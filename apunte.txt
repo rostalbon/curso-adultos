@@ -1,9 +1,9 @@
-Páginas:
+PÁGINAS
 1. Inicio de sesión
 2. Vista previa
 3. Curso
 
-Unidades del curso:
+UNIDADES DEL CURSO
 1. Introducción al curso
 2. Uso básico de la computadora
 3. Procesadores de texto
