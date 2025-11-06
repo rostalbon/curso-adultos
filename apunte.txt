@@ -10,3 +10,4 @@ Unidades del curso:
 4. Presentaciones
 5. Hojas de cálculo
 6. Herramientas compartidas de Google
+7. Evaluación final
