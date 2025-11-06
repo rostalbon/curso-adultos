@@ -86,3 +86,23 @@ function entrarInvitado() {
     localStorage.setItem('usuarioActual', JSON.stringify(invitado));
     window.location.href = 'vista-previa.html';
 }
+
+window.onload = function() {
+    const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
+    if (!usuarioActual) {
+        window.location.href = 'index.html';
+        return;
+    }
+    document.getElementById('nombre-usuario').textContent = usuarioActual.nombre;
+};
+
+function comenzarCurso() {
+    window.location.href = 'curso.html';
+}
+
+function cerrarSesion() {
+    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+        localStorage.removeItem('usuarioActual');
+        window.location.href = 'index.html';
+    }
+}
