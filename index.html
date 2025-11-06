@@ -3,9 +3,383 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curso Herramientas Digitales</title>
+    <title>Acceso - Curso Herramientas Digitales</title>
+    <link rel="stylesheet" href="estilos.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            min-height: 550px;
+        }
+
+        .info-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-section h1 {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .info-section p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .info-section ul {
+            margin-top: 25px;
+            list-style: none;
+        }
+
+        .info-section li {
+            margin: 12px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .form-section {
+            flex: 1;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-container {
+            width: 100%;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            color: #666;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            color: #666;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .form-content {
+            display: none;
+        }
+
+        .form-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .mensaje {
+            text-align: center;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .mensaje.exito {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .mensaje.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .info-section {
+                padding: 30px 25px;
+            }
+
+            .info-section h1 {
+                font-size: 1.8em;
+            }
+
+            .form-section {
+                padding: 30px 25px;
+            }
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+        <div class="info-section">
+            <h1>Curso de Herramientas Digitales</h1>
+            <p>Aprende a dominar las herramientas digitales más importantes para el mundo actual.</p>
+            <ul>
+                <li>6 unidades completas</li>
+                <li>Contenido interactivo</li>
+                <li>Evaluación final</li>
+                <li>Certificado de finalización</li>
+                <li>Acceso ilimitado</li>
+            </ul>
+        </div>
+
+        <div class="form-section">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>¡Bienvenido!</h2>
+                    <p>Accede o crea tu cuenta</p>
+                </div>
+
+                <div class="tabs">
+                    <div class="tab active" onclick="cambiarTab('login')">Iniciar Sesión</div>
+                    <div class="tab" onclick="cambiarTab('registro')">Registrarse</div>
+                </div>
+
+                <div id="login-form" class="form-content active">
+                    <form onsubmit="iniciarSesion(event)">
+                        <div class="form-group">
+                            <label for="login-email">Correo Electrónico</label>
+                            <input type="email" id="login-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Contraseña</label>
+                            <input type="password" id="login-password" required>
+                        </div>
+                        <button type="submit" class="btn">Iniciar Sesión</button>
+                        <div id="login-mensaje" class="mensaje"></div>
+                    </form>
+                </div>
+
+                <div id="registro-form" class="form-content">
+                    <form onsubmit="registrar(event)">
+                        <div class="form-group">
+                            <label for="reg-nombre">Nombre Completo</label>
+                            <input type="text" id="reg-nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-email">Correo Electrónico</label>
+                            <input type="email" id="reg-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-password">Contraseña</label>
+                            <input type="password" id="reg-password" required minlength="6">
+                        </div>
+                        <button type="submit" class="btn">Crear Cuenta</button>
+                        <div id="reg-mensaje" class="mensaje"></div>
+                    </form>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
+                    <p style="color: #666; margin-bottom: 10px;">¿Solo quieres explorar?</p>
+                    <button class="btn" onclick="entrarInvitado()" style="background: #6c757d;">Entrar como Invitado</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function cambiarTab(tab) {
+            const tabs = document.querySelectorAll('.tab');
+            const forms = document.querySelectorAll('.form-content');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            forms.forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'login') {
+                tabs[0].classList.add('active');
+                document.getElementById('login-form').classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('registro-form').classList.add('active');
+            }
+        }
+
+        function mostrarMensaje(elementId, mensaje, tipo) {
+            const elemento = document.getElementById(elementId);
+            elemento.textContent = mensaje;
+            elemento.className = `mensaje ${tipo}`;
+            elemento.style.display = 'block';
+            
+            setTimeout(() => {
+                elemento.style.display = 'none';
+            }, 3000);
+        }
+
+        function iniciarSesion(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            const usuarioGuardado = localStorage.getItem('usuario_' + email);
+            
+            if (usuarioGuardado) {
+                const usuario = JSON.parse(usuarioGuardado);
+                if (usuario.password === password) {
+                    localStorage.setItem('usuarioActual', JSON.stringify(usuario));
+                    mostrarMensaje('login-mensaje', '¡Inicio de sesión exitoso! Redirigiendo...', 'exito');
+                    setTimeout(() => {
+                        window.location.href = 'vista-previa.html';
+                    }, 1500);
+                } else {
+                    mostrarMensaje('login-mensaje', 'Contraseña incorrecta', 'error');
+                }
+            } else {
+                mostrarMensaje('login-mensaje', 'Usuario no encontrado', 'error');
+            }
+        }
+
+        function registrar(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('reg-nombre').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            
+            if (localStorage.getItem('usuario_' + email)) {
+                mostrarMensaje('reg-mensaje', 'Este correo ya está registrado', 'error');
+                return;
+            }
+            
+            const usuario = {
+                nombre: nombre,
+                email: email,
+                password: password,
+                progreso: {}
+            };
+            
+            localStorage.setItem('usuario_' + email, JSON.stringify(usuario));
+            mostrarMensaje('reg-mensaje', '¡Cuenta creada exitosamente! Cambiando a inicio de sesión...', 'exito');
+            
+            setTimeout(() => {
+                cambiarTab('login');
+                document.getElementById('login-email').value = email;
+            }, 1500);
+        }
+
+        function entrarInvitado() {
+            const invitado = {
+                nombre: 'Invitado',
+                email: 'invitado@temp.com',
+                esInvitado: true,
+                progreso: {}
+            };
+            
+            localStorage.setItem('usuarioActual', JSON.stringify(invitado));
+            window.location.href = 'vista-previa.html';
+        }
+    </script>
 </body>
 </html>
