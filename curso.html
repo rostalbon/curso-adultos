@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso - Herramientas Digitales</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar h1 {
+            font-size: 1.3em;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .progreso-general {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .btn-volver {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-volver:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            width: 300px;
+            background: white;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            max-height: calc(100vh - 60px);
+        }
+
+        .sidebar h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .unidad-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #e0e0e0;
+        }
+
+        .unidad-item:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+        }
+
+        .unidad-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .unidad-item.completada {
+            border-color: #28a745;
+        }
+
+        .unidad-item.completada::after {
+            content: " ✓";
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .unidad-item.active.completada::after {
+            color: white;
+        }
+
+        .unidad-titulo {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .unidad-duracion {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
+        .evaluacion-item {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .evaluacion-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .evaluacion-item.bloqueada {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .contenido-unidad {
+            display: none;
+        }
+
+        .contenido-unidad.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .unidad-header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .unidad-header h2 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .unidad-header p {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .leccion {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .leccion h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .leccion p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .leccion ul {
+            margin-left: 25px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .leccion li {
+            margin-bottom: 10px;
+        }
+
+        .btn-completar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 20px;
+        }
+
+        .btn-completar:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-completar:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .evaluacion-container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .pregunta {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+        }
+
+        .pregunta h4 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .opciones {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .opcion {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .opcion:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+        }
+
+        .opcion input {
+            margin-right: 10px;
+        }
+
+        .resultado {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .resultado h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .resultado.aprobado h2 {
+            color: #28a745;
+        }
+
+        .resultado.reprobado h2 {
+            color: #dc3545;
+        }
+
+        .puntuacion {
+            font-size: 3em;
+            font-weight: 700;
+            margin: 20px 0;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: none;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>📚 Curso Herramientas Digitales</h1>
+        <div class="user-info">
+            <span class="progreso-general">Progreso: <span id="progreso-porcentaje">0%</span></span>
+            <button class="btn-volver" onclick="volverVista()">← Volver</button>
+        </div>
+    </nav>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <h3>Contenido del Curso</h3>
+            <div id="menu-unidades"></div>
+            <div class="evaluacion-item" id="menu-evaluacion" onclick="mostrarEvaluacion()">
+                🏆 Evaluación Final
+            </div>
+        </aside>
+
+        <main class="content">
+            <div id="contenido-curso"></div>
+        </main>
+    </div>
+
+    <script>
+        const unidades = [
+            {
+                id: 1,
+                titulo: "Introducción a las Herramientas Digitales",
+                icono: "💻",
+                duracion: "45 min",
+                descripcion: "Conoce el mundo digital, sus conceptos fundamentales y las herramientas básicas que utilizarás en tu día a día.",
+                lecciones: [
+                    {
+                        titulo: "¿Qué son las herramientas digitales?",
+                        contenido: "Las herramientas digitales son programas, aplicaciones y servicios que nos permiten realizar tareas de manera más eficiente en el mundo digital. Incluyen software de productividad, comunicación, almacenamiento y más.",
+                        puntos: ["Definición de herramientas digitales", "Importancia en el mundo actual", "Clasificación de herramientas", "Beneficios de su uso"]
+                    },
+                    {
+                        titulo: "El ecosistema digital",
+                        contenido: "El ecosistema digital está formado por dispositivos, software, servicios en la nube y conexiones de red que trabajan juntos para facilitar nuestras actividades diarias.",
+                        puntos: ["Dispositivos: computadoras, tablets, smartphones", "Software: aplicaciones y programas", "Internet y conectividad", "Servicios en la nube"]
+                    },
+                    {
+                        titulo: "Seguridad básica digital",
+                        contenido: "La seguridad digital es fundamental para proteger tu información personal y profesional en línea.",
+                        puntos: ["Contraseñas seguras", "Autenticación de dos factores", "Identificar amenazas comunes", "Mejores prácticas de seguridad"]
+                    }
+                ]
+            },
+            {
+                id: 2,
+                titulo: "Correo Electrónico y Comunicación",
+                icono: "📧",
+                duracion: "50 min",
+                descripcion: "Aprende a gestionar tu correo electrónico de manera efectiva y a comunicarte profesionalmente en línea.",
+                lecciones: [
+                    {
+                        titulo: "Gestión de correo electrónico",
+                        contenido: "El correo electrónico es una herramienta esencial de comunicación profesional y personal. Aprende a organizarlo eficientemente.",
+                        puntos: ["Crear y configurar cuentas", "Organización con carpetas y etiquetas", "Filtros y reglas automáticas", "Gestión de spam"]
+                    },
+                    {
+                        titulo: "Comunicación profesional por email",
+                        contenido: "La comunicación por correo requiere etiqueta y profesionalismo. Aprende las mejores prácticas.",
+                        puntos: ["Estructura de un email profesional", "Asuntos claros y concisos", "Tono apropiado", "Firmas electrónicas"]
+                    },
+                    {
+                        titulo: "Herramientas de mensajería",
+                        contenido: "Explora las diferentes plataformas de mensajería instantánea y videoconferencia para trabajo y estudio.",
+                        puntos: ["WhatsApp, Telegram, Slack", "Zoom, Google Meet, Teams", "Etiqueta en videollamadas", "Compartir pantalla y archivos"]
+                    }
+                ]
+            },
+            {
+                id: 3,
+                titulo: "Procesadores de Texto",
+                icono: "📝",
+                duracion: "60 min",
+                descripcion: "Domina herramientas como Word y Google Docs para crear documentos profesionales y colaborativos.",
+                lecciones: [
+                    {
+                        titulo: "Introducción a procesadores de texto",
+                        contenido: "Los procesadores de texto son herramientas esenciales para crear documentos. Conoce sus funciones básicas.",
+                        puntos: ["Microsoft Word vs Google Docs", "Interfaz y herramientas básicas", "Crear y guardar documentos", "Formatos de archivo"]
+                    },
+                    {
+                        titulo: "Formato y estilo de documentos",
+                        contenido: "Aprende a dar formato profesional a tus documentos con estilos, fuentes y diseño.",
+                        puntos: ["Fuentes, tamaños y colores", "Estilos de párrafo y título", "Márgenes y orientación", "Encabezados y pies de página"]
+                    },
+                    {
+                        titulo: "Colaboración en tiempo real",
+                        contenido: "Descubre cómo trabajar en equipo en un mismo documento simultáneamente.",
+                        puntos: ["Compartir documentos", "Control de cambios y comentarios", "Versionado de documentos", "Resolver conflictos"]
+                    }
+                ]
+            },
+            {
+                id: 4,
+                titulo: "Hojas de Cálculo",
+                icono: "📊",
+                duracion: "70 min",
+                descripcion: "Aprende a organizar datos, crear fórmulas y generar gráficos con Excel y Google Sheets.",
+                lecciones: [
+                    {
+                        titulo: "Fundamentos de hojas de cálculo",
+                        contenido: "Las hojas de cálculo son poderosas herramientas para organizar y analizar datos numéricos.",
+                        puntos: ["Estructura: filas, columnas, celdas", "Tipos de datos", "Introducción a Excel y Sheets", "Navegación básica"]
+                    },
+                    {
+                        titulo: "Fórmulas y funciones básicas",
+                        contenido: "Aprende a realizar cálculos automáticos y usar funciones para análisis de datos.",
+                        puntos: ["Operadores matemáticos", "Funciones SUMA, PROMEDIO, MAX, MIN", "Referencias de celdas", "Copiar fórmulas"]
+                    },
+                    {
+                        titulo: "Visualización de datos",
+                        contenido: "Transforma tus datos en gráficos y tablas comprensibles y atractivas.",
+                        puntos: ["Tipos de gráficos", "Crear gráficos efectivos", "Tablas dinámicas", "Formato condicional"]
+                    }
+                ]
+            },
+            {
+                id: 5,
+                titulo: "Presentaciones Digitales",
+                icono: "🎨",
+                duracion: "55 min",
+                descripcion: "Crea presentaciones impactantes con PowerPoint, Google Slides y otras herramientas visuales.",
+                lecciones: [
+                    {
+                        titulo: "Diseño de presentaciones efectivas",
+                        contenido: "Una buena presentación combina contenido claro con diseño visual atractivo.",
+                        puntos: ["Principios de diseño", "Elección de colores y fuentes", "Uso de plantillas", "Menos es más: simplicidad"]
+                    },
+                    {
+                        titulo: "Contenido multimedia",
+                        contenido: "Enriquece tus presentaciones con imágenes, videos y elementos interactivos.",
+                        puntos: ["Insertar imágenes y videos", "Animaciones y transiciones", "Audio y narración", "Enlaces e interactividad"]
+                    },
+                    {
+                        titulo: "Presentación efectiva",
+                        contenido: "Aprende técnicas para presentar con confianza y captar la atención de tu audiencia.",
+                        puntos: ["Preparación y práctica", "Lenguaje corporal", "Manejo de preguntas", "Uso del presentador"]
+                    }
+                ]
+            },
+            {
+                id: 6,
+                titulo: "Almacenamiento en la Nube",
+                icono: "☁️",
+                duracion: "40 min",
+                descripcion: "Descubre cómo guardar, compartir y colaborar en archivos usando servicios en la nube.",
+                lecciones: [
+                    {
+                        titulo: "¿Qué es la nube?",
+                        contenido: "El almacenamiento en la nube permite guardar y acceder a tus archivos desde cualquier dispositivo con internet.",
+                        puntos: ["Concepto de cloud computing", "Ventajas del almacenamiento en nube", "Servicios populares: Google Drive, Dropbox, OneDrive", "Sincronización entre dispositivos"]
+                    },
+                    {
+                        titulo: "Organización y compartición",
+                        contenido: "Organiza tus archivos en la nube y compártelos de manera segura con otros usuarios.",
+                        puntos: ["Estructura de carpetas", "Compartir archivos y carpetas", "Permisos de acceso", "Enlaces compartidos"]
+                    },
+                    {
+                        titulo: "Seguridad y respaldo",
+                        contenido: "Protege tus datos en la nube y asegura tener respaldos de información importante.",
+                        puntos: ["Privacidad de datos", "Copias de seguridad automáticas", "Recuperación de archivos", "Buenas prácticas de seguridad"]
+                    }
+                ]
+            }
+        ];
+
+        const preguntasEvaluacion = [
+            {
+                pregunta: "¿Cuál es la principal ventaja de usar herramientas digitales?",
+                opciones: ["Son gratuitas", "Aumentan la eficiencia", "No requieren internet", "Son difíciles de usar"],
+                correcta: 1
+            },
+            {
+                pregunta: "¿Qué característica es esencial en una contraseña segura?",
+                opciones: ["Debe ser corta", "Debe tener mayúsculas, minúsculas y números", "Debe ser tu fecha de nacimiento", "Debe ser fácil de recordar"],
+                correcta: 1
+            },
+            {
+                pregunta: "¿Cuál es la mejor práctica para organizar el correo electrónico?",
+                opciones: ["Dejar todo en la bandeja de entrada", "Usar carpetas y etiquetas", "Eliminar todos los correos", "No leer los correos"],
+                correcta: 1
+            },
+            {
+                pregunta: "En un procesador de texto, ¿para qué sirven los estilos?",
+                opciones: ["Dar formato consistente", "Aumentar el tamaño del archivo", "Dificultar la lectura", "Eliminar texto"],
+                correcta: 0
+            },
+            {
+                pregunta: "¿Qué función de Excel suma todos los valores de un rango?",
+                opciones: ["PROMEDIO", "SUMA", "MAX", "CONTAR"],
+                correcta: 1
+            },
+            {
+                pregunta: "En presentaciones, ¿cuál es un principio de diseño importante?",
+                opciones: ["Usar muchos colores", "Simplicidad y claridad", "Mucho texto en cada diapositiva", "Animaciones en todo"],
+                correcta: 1
+            },
+            {
+                pregunta: "¿Qué permite el almacenamiento en la nube?",
+                opciones: ["Acceder desde cualquier dispositivo", "Solo guardar imágenes", "No compartir archivos", "Usar solo en un dispositivo"],
+                correcta: 0
+            },
+            {
+                pregunta: "¿Qué es una tabla dinámica en hojas de cálculo?",
+                opciones: ["Una tabla que no se puede editar", "Una herramienta para analizar datos", "Un tipo de gráfico", "Una función matemática"],
+                correcta: 1
+            },
+            {
+                pregunta: "¿Cuál es la ventaja de Google Docs sobre Word tradicional?",
+                opciones: ["Es más caro", "Permite colaboración en tiempo real", "Solo funciona offline", "No se puede compartir"],
+                correcta: 1
+            },
+            {
+                pregunta: "¿Qué es el formato condicional en hojas de cálculo?",
+                opciones: ["Un tipo de fórmula", "Formato que cambia según el valor de la celda", "Una función de texto", "Un gráfico especial"],
+                correcta: 1
+            }
+        ];
+
+        let progresoUsuario = {};
+        let usuarioActual = null;
+
+        window.onload = function() {
+            usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
+            if (!usuarioActual) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            cargarProgreso();
+            generarMenu();
+            actualizarProgresoGeneral();
+            mostrarUnidad(1);
+        };
+
+        function cargarProgreso() {
+            const usuarioKey = 'usuario_' + usuarioActual.email;
+            const usuario = JSON.parse(localStorage.getItem(usuarioKey));
+            progresoUsuario = usuario.progreso || {};
+        }
+
+        function guardarProgreso() {
+            const usuarioKey = 'usuario_' + usuarioActual.email;
+            const usuario = JSON.parse(localStorage.getItem(usuarioKey));
+            usuario.progreso = progresoUsuario;
+            localStorage.setItem(usuarioKey, JSON.stringify(usuario));
+        }
+
+        function generarMenu() {
+            const menuContainer = document.getElementById('menu-unidades');
+            unidades.forEach(unidad => {
+                const item = document.createElement('div');
+                item.className = 'unidad-item';
+                if (progresoUsuario['unidad_' + unidad.id]) {
+                    item.classList.add('completada');
+                }
+                item.innerHTML = `
+                    <div class="unidad-titulo">${unidad.icono} ${unidad.titulo}</div>
+                    <div class="unidad-duracion">${unidad.duracion}</div>
+                `;
+                item.onclick = () => mostrarUnidad(unidad.id);
+                menuContainer.appendChild(item);
+            });
+        }
+
+        function mostrarUnidad(id) {
+            const unidad = unidades.find(u => u.id === id);
+            const contenido = document.getElementById('contenido-curso');
+            
+            document.querySelectorAll('.unidad-item').forEach((item, index) => {
+                item.classList.remove('active');
+                if (index === id - 1) item.classList.add('active');
+            });
+            
+            let html = `
+                <div class="contenido-unidad active">
+                    <div class="unidad-header">
+                        <h2>${unidad.icono} ${unidad.titulo}</h2>
+                        <p>${unidad.descripcion}</p>
+                    </div>
+            `;
+            
+            unidad.lecciones.forEach((leccion, index) => {
+                html += `
+                    <div class="leccion">
+                        <h3>Lección ${index + 1}: ${leccion.titulo}</h3>
+                        <p>${leccion.contenido}</p>
+                        <ul>
+                            ${leccion.puntos.map(punto => `<li>${punto}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            });
+            
+            const completada = progresoUsuario['unidad_' + id];
+            html += `
+                <button class="btn-completar" onclick="completarUnidad(${id})" ${completada ? 'disabled' : ''}>
+                    ${completada ? '✓ Unidad Completada' : 'Marcar como Completada'}
+                </button>
+                </div>
+            `;
+            
+            contenido.innerHTML = html;
+        }
+
+        function completarUnidad(id) {
+            progresoUsuario['unidad_' + id] = true;
+            guardarProgreso();
+            generarMenu();
+            mostrarUnidad(id);
+            actualizarProgresoGeneral();
+        }
+
+        function actualizarProgresoGeneral() {
+            const totalUnidades = unidades.length;
+            const completadas = Object.keys(progresoUsuario).filter(k => k.startsWith('unidad_')).length;
+            const porcentaje = Math.round((completadas / totalUnidades) * 100);
+            document.getElementById('progreso-porcentaje').textContent = porcentaje + '%';
+            
+            const evaluacionBtn = document.getElementById('menu-evaluacion');
+            if (completadas === totalUnidades) {
+                evaluacionBtn.classList.remove('bloqueada');
+            } else {
+                evaluacionBtn.classList.add('bloqueada');
+            }
+        }
+
+        function mostrarEvaluacion() {
+            const completadas = Object.keys(progresoUsuario).filter(k => k.startsWith('unidad_')).length;
+            if (completadas < unidades.length) {
+                alert('Debes completar todas las unidades antes de realizar la evaluación final.');
+                return;
+            }
+            
+            const contenido = document.getElementById('contenido-curso');
+            let html = `
+                <div class="evaluacion-container">
+                    <h2>🏆 Evaluación Final</h2>
+                    <p>Responde las siguientes preguntas. Necesitas 70% o más para aprobar.</p>
+                    <form id="form-evaluacion" onsubmit="evaluarExamen(event)">
+            `;
+            
+            preguntasEvaluacion.forEach((pregunta, index) => {
+                html += `
+                    <div class="pregunta">
+                        <h4>${index + 1}. ${pregunta.pregunta}</h4>
+                        <div class="opciones">
+                            ${pregunta.opciones.map((opcion, i) => `
+                                <label class="opcion">
+                                    <input type="radio" name="pregunta${index}" value="${i}" required>
+                                    ${opcion}
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                    <button type="submit" class="btn-completar">Enviar Evaluación</button>
+                    </form>
+                </div>
+            `;
+            
+            contenido.innerHTML = html;
+        }
+
+        function evaluarExamen(e) {
+            e.preventDefault();
+            let correctas = 0;
+            
+            preguntasEvaluacion.forEach((pregunta, index) => {
+                const respuesta = document.querySelector(`input[name="pregunta${index}"]:checked`).value;
+                if (parseInt(respuesta) === pregunta.correcta) {
+                    correctas++;
+                }
+            });
+            
+            const porcentaje = Math.round((correctas / preguntasEvaluacion.length) * 100);
+            const aprobado = porcentaje >= 70;
+            
+            progresoUsuario.evaluacion = {
+                completada: true,
+                puntuacion: porcentaje,
+                aprobado: aprobado
+            };
+            guardarProgreso();
+            
+            mostrarResultado(correctas, preguntasEvaluacion.length, porcentaje, aprobado);
+        }
+
+        function mostrarResultado(correctas, total, porcentaje, aprobado) {
+            const contenido = document.getElementById('contenido-curso');
+            contenido.innerHTML = `
+                <div class="resultado ${aprobado ? 'aprobado' : 'reprobado'}">
+                    <h2>${aprobado ? '🎉 ¡Felicitaciones!' : '😔 No aprobaste'}</h2>
+                    <p>${aprobado ? 'Has completado exitosamente el curso' : 'Necesitas repasar el contenido'}</p>
+                    <div class="puntuacion">${porcentaje}%</div>
+                    <p>Respondiste correctamente ${correctas} de ${total} preguntas</p>
+                    <p>${aprobado ? '¡Has obtenido tu certificado de finalización!' : 'Repasa las unidades e intenta nuevamente.'}</p>
+                    <button class="btn-completar" onclick="location.reload()">Volver al Curso</button>
+                </div>
+            `;
+        }
+
+        function volverVista() {
+            window.location.href = 'vista-previa.html';
+        }
+    </script>
+</body>
+</html>
