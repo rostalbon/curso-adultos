@@ -106,7 +106,3 @@ function cerrarSesion() {
         window.location.href = 'index.html';
     }
 }
-
-function mostrarUnidad1() {
-    
-}
