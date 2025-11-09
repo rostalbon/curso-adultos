@@ -15,4 +15,12 @@ UNIDADES DEL CURSO
 UNIDAD #1 - INTRODUCCIÓN AL CURSO
 
 UNIDAD #2 - USO BÁSICO DE LA COMPUTADORA 
-La computadora es una herramienta muy útil para trabajar hoy en día. Al aprender a usarla de forma correcta y eficiente podemos abrirnos puertas a puestos y dinámicas de trabajo distintas, modernas y mucho más amplias. Actualmente, el buen uso de los dispositivos electrónicos en el trabajo nos suma muchos puntos para nuestro perfil como trabajador, son herramientas casi esenciales. En esta unidad vamos a abarcar el uso básico de la computadora, es una sección importante ya que no solo nos va a sumar un desarrollo propio, sino también saberes especialmente necesarios para las unidades siguientes.
+    La computadora es una herramienta muy útil para trabajar hoy en día. Al aprender a usarla de forma correcta y eficiente podemos abrirnos puertas a puestos y dinámicas de trabajo distintas, modernas y mucho más amplias. Actualmente, el buen uso de los dispositivos electrónicos en el trabajo nos suma muchos puntos para nuestro perfil como trabajador, son herramientas casi esenciales. En esta unidad vamos a abarcar el uso básico de la computadora, es una sección importante ya que no solo nos va a sumar un desarrollo propio, sino también saberes especialmente necesarios para las unidades siguientes.
+
+    LECCIÓN #1 - Encendido y apagado correcto de la computadora
+    Algo importante para tener en cuenta al usar una computadora es que, como cualquier cosa material, necesita un mantenimiento y un cuidado. Hay muchas prácticas que podemos implementar en nuestro día a día para evitar el desgaste prematuro de nuestro dispositivo. Una acción muy fácil que podemos realizar para mantener nuestra computadora en buen estado es un buen y eficiente apagado y encendido.
+    ¿CÓMO PODEMOS ENCENDER LA COMPUTADORA CORRECTAMENTE?
+    Para encender una computadora hay que tener en cuenta varios factores, como el tipo de computadora, la marca, el modelo, etc. Pero en general todas cumplen con los mismos estándares:
+    LAPTOPS
+    Estas son las más sencillas de encender, ya que es todo mediante un único botón: el botón de encendido. Dependiendo del modelo, la computadora debería encender con un sólo clic o manteniendo presionado por algunos segundos (use este método si el primero no funcionó).
+    Estas son algunas imágenes de cómo podría lucir un botón de encendido de este estilo:
