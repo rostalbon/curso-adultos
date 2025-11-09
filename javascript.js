@@ -111,7 +111,7 @@ const unidades = [
     {
         id: 1,
         titulo: "Introducción al curso",
-        icono: "💻",
+        icono: "🌐",
         duracion: "45 min",
         descripcion: "Conoce el mundo digital, sus conceptos fundamentales y las herramientas básicas que utilizarás en tu día a día.",
         lecciones: [
@@ -135,7 +135,7 @@ const unidades = [
     {
         id: 2,
         titulo: "Uso básico de la computadora",
-        icono: "📧",
+        icono: "💻",
         duracion: "50 min",
         descripcion: "Aprende a gestionar tu correo electrónico de manera efectiva y a comunicarte profesionalmente en línea.",
         lecciones: [
@@ -207,7 +207,7 @@ const unidades = [
     {
         id: 5,
         titulo: "Hojas de cálculo",
-        icono: "🎨",
+        icono: "📈",
         duracion: "55 min",
         descripcion: "Crea presentaciones impactantes con PowerPoint, Google Slides y otras herramientas visuales.",
         lecciones: [
