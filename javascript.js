@@ -117,7 +117,7 @@ const unidades = [
         lecciones: [
             {
                 titulo: "¿Qué son las herramientas digitales?",
-                contenido: "Las herramientas digitales son programas, aplicaciones y servicios que nos permiten realizar tareas de manera más eficiente en el mundo digital. Incluyen software de productividad, comunicación, almacenamiento y más.",
+                contenido: "La computadora es una herramienta muy útil para trabajar hoy en día. Al aprender a usarla de forma correcta y eficiente podemos abrirnos puertas a puestos y dinámicas de trabajo distintas, modernas y mucho más amplias. Actualmente, el buen uso de los dispositivos electrónicos en el trabajo nos suma muchos puntos para nuestro perfil como trabajador, son herramientas casi esenciales. En esta unidad vamos a abarcar el uso básico de la computadora, es una sección importante ya que no solo nos va a sumar un desarrollo propio, sino también saberes especialmente necesarios para las unidades siguientes.\nLas herramientas digitales son programas, aplicaciones y servicios que nos permiten realizar tareas de manera más eficiente en el mundo digital. Incluyen software de productividad, comunicación, almacenamiento y más.",
                 puntos: ["Definición de herramientas digitales", "Importancia en el mundo actual", "Clasificación de herramientas", "Beneficios de su uso"]
             },
             {
