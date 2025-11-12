@@ -1,13 +1,17 @@
-import {
-    $registerButton,    
-    $loginEmail,    
-    $loginPassword, 
-    $registerName,  
-    $registerEmail, 
-    $registerPassword,  
-    $tabs,  
-    $forms, 
-} from './domElements.js'
+const $registerButton = document.querySelector('#register-button')
+const $loginEmail = document.getElementById('login-email')
+const $loginPassword = document.getElementById('login-password')
+const $registerName = document.getElementById('reg-nombre')
+const $registerEmail = document.getElementById('reg-email')
+const $registerPassword = document.getElementById('reg-password')
+const $tabs = document.querySelectorAll('.tab')
+const $forms = document.querySelectorAll('.form-content')
+
+$loginEmail.innerText = ""
+$loginEmail.innerText = ""
+$registerPassword.innerText = ""
+$registerName.innerText = ""
+$registerEmail.innerText = ""
 
 function mostrarMensaje(elementId, mensaje, tipo) {
     const elemento = document.getElementById(elementId);
@@ -41,7 +45,7 @@ const iniciarSesion = async (e) => {
   
       if (res.ok) {
         const data = await res.json()
-        localStorage.setItem('userName', JSON.stringify(data?.name))
+        localStorage.setItem('user', JSON.stringify(data))
         window.location.href = '/vista-previa'
       } else {
         mostrarMensaje('login-mensaje', 'El usuario no existe, cree uno o pruebe con otras credenciales', 'error')
@@ -55,7 +59,7 @@ $registerButton.addEventListener('click', async (e) => {
     e.preventDefault()
     const nombre = $registerName.value
     const email = $registerEmail.value
-    const password = $registerPassword
+    const password = $registerPassword.value
 
     const body = {
         name: nombre,
@@ -101,7 +105,6 @@ function cambiarTab(tab) {
     $tabs.forEach(t => t.classList.remove('active'));
     $forms.forEach(f => f.classList.remove('active'));
 
-    
     if (tab === 'login') {
         $tabs[0].classList.add('active');
         document.getElementById('login-form').classList.add('active');

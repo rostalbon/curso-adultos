@@ -19,6 +19,24 @@
         <aside class="sidebar">
             <h3>Contenido del Curso</h3>
             <div id="menu-unidades"></div>
+            <div class="unidad-item" id="menu-unidad" onclick="mostrarUnidad(1)">
+                Unidad #1
+            </div>
+            <div class="unidad-item" id="menu-unidad" onclick="mostrarUnidad(2)">
+                Unidad #2
+            </div>
+            <div class="unidad-item" id="menu-unidad" onclick="mostrarUnidad(3)">
+                Unidad #3
+            </div>
+            <div class="unidad-item" id="menu-unidad" onclick="mostrarUnidad(4)">
+                Unidad #4
+            </div>
+            <div class="unidad-item" id="menu-unidad" onclick="mostrarUnidad(5)">
+                Unidad #5
+            </div>
+            <div class="unidad-item" id="menu-unidad" onclick="mostrarUnidad(6)">
+                Unidad #6
+            </div>
             <div class="evaluacion-item" id="menu-evaluacion" onclick="mostrarEvaluacion()">
                 🏆 Evaluación Final
             </div>
@@ -230,51 +248,54 @@
             }
         ];
 
-        let progresoUsuario = {};
-        let usuarioActual = null;
+        const usuarioGuardado = JSON.parse(localStorage.getItem('user'))
+        const nombreUsuarioActual = usuarioGuardado[0].name
+        const emailUsuarioActual = usuarioGuardado[0].email
+        
+        async function cargarProgreso() {
+            const usuarioGuardado = JSON.parse(localStorage.getItem('user'))
+            const usuario = await fetch(`/user/get-progress/${nombreUsuarioActual}`)
+            const progreso = await usuario.json()
+            return progreso.progress
+        }
+        
+        // Esto es una promesa a resolver, por lo que hay que usar un async await para trabajar con progresoActual
+        const progresoActual = cargarProgreso()
+        
+        const progresoUsuario = `unidad_${progresoActual}`
 
-        window.onload = function() {
-            usuarioActual = JSON.parse(localStorage.getItem('userName'));
-            if (typeof usuarioActual === 'null') {
-                window.location.href = 'index.html';
-                return;
+        function guardarProgreso(unidad) {
+            const body = {
+                email: emailUsuarioActual,
+                newProgress: unidad,
             }
-            
-            cargarProgreso();
-            generarMenu();
-            actualizarProgresoGeneral();
-            mostrarUnidad(1);
-        };
 
-        function cargarProgreso() {
-            const usuarioKey = 'usuario_' + usuarioActual.email;
-            const usuario = JSON.parse(localStorage.getItem(usuarioKey));
-            progresoUsuario = usuario.progreso || {};
+            fetch(`/user/update-progress`, {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                method: 'post',
+                body: JSON.stringify(body)
+            })
+            .then(e => console.log(e))
         }
 
-        function guardarProgreso() {
-            const usuarioKey = 'usuario_' + usuarioActual.email;
-            const usuario = JSON.parse(localStorage.getItem(usuarioKey));
-            usuario.progreso = progresoUsuario;
-            localStorage.setItem(usuarioKey, JSON.stringify(usuario));
-        }
-
-        function generarMenu() {
-            const menuContainer = document.getElementById('menu-unidades');
-            unidades.forEach(unidad => {
-                const item = document.createElement('div');
-                item.className = 'unidad-item';
-                if (progresoUsuario['unidad_' + unidad.id]) {
-                    item.classList.add('completada');
-                }
-                item.innerHTML = `
-                    <div class="unidad-titulo">${unidad.icono} ${unidad.titulo}</div>
-                    <div class="unidad-duracion">${unidad.duracion}</div>
-                `;
-                item.onclick = () => mostrarUnidad(unidad.id);
-                menuContainer.appendChild(item);
-            });
-        }
+        // function generarMenu() {
+        //     const menuContainer = document.getElementById('menu-unidades');
+        //     unidades.forEach(unidad => {
+        //         const item = document.createElement('div');
+        //         item.className = 'unidad-item';
+        //         if (progresoUsuario['unidad_' + unidad.id]) {
+        //             item.classList.add('completada');
+        //         }
+        //         item.innerHTML = `
+        //             <div class="unidad-titulo">${unidad.icono} ${unidad.titulo}</div>
+        //             <div class="unidad-duracion">${unidad.duracion}</div>
+        //         `;
+        //         item.onclick = () => mostrarUnidad(unidad.id);
+        //         menuContainer.appendChild(item);
+        //     });
+        // }
 
         function mostrarUnidad(id) {
             const unidad = unidades.find(u => u.id === id);
@@ -318,17 +339,16 @@
 
         function completarUnidad(id) {
             progresoUsuario['unidad_' + id] = true;
-            guardarProgreso();
-            generarMenu();
+            guardarProgreso(id);
+            // generarMenu();
             mostrarUnidad(id);
             actualizarProgresoGeneral();
         }
 
-        function actualizarProgresoGeneral() {
+        async function actualizarProgresoGeneral() {
             const totalUnidades = unidades.length;
             const completadas = Object.keys(progresoUsuario).filter(k => k.startsWith('unidad_')).length;
-            const porcentaje = Math.round((completadas / totalUnidades) * 100);
-            document.getElementById('progreso-porcentaje').textContent = porcentaje + '%';
+            document.getElementById('progreso-porcentaje').textContent = await progresoActual + '%';
             
             const evaluacionBtn = document.getElementById('menu-evaluacion');
             if (completadas === totalUnidades) {
@@ -419,6 +439,11 @@
         function volverVista() {
             window.location.href = '/vista-previa';
         }
+
+        cargarProgreso();
+        // generarMenu();
+        actualizarProgresoGeneral();
+        mostrarUnidad(1);
     </script>
 </body>
 </html>

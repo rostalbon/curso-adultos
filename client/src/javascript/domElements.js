@@ -1,8 +1,0 @@
-export const $registerButton = document.querySelector('#register-button')
-export const $loginEmail = document.getElementById('login-email')
-export const $loginPassword = document.getElementById('login-password')
-export const $registerName = document.getElementById('reg-nombre')
-export const $registerEmail = document.getElementById('reg-email')
-export const $registerPassword = document.getElementById('reg-password')
-export const $tabs = document.querySelectorAll('.tab')
-export const $forms = document.querySelectorAll('.form-content')

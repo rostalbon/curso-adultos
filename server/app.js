@@ -18,6 +18,7 @@ app.use(express.json())
 app.disable('X-Powered-By')
 app.use(express.static(pJoin('client/src/styles')))
 app.use(express.static(pJoin('client/src/javascript')))
+app.use(express.static(pJoin('client/public/img')))
 
 app.get('/', (req, res) => {
   res.sendFile(pJoin('client/src/pages/index.html'))
