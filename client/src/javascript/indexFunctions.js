@@ -7,12 +7,6 @@ const $registerPassword = document.getElementById('reg-password')
 const $tabs = document.querySelectorAll('.tab')
 const $forms = document.querySelectorAll('.form-content')
 
-$loginEmail.innerText = ""
-$loginEmail.innerText = ""
-$registerPassword.innerText = ""
-$registerName.innerText = ""
-$registerEmail.innerText = ""
-
 function mostrarMensaje(elementId, mensaje, tipo) {
     const elemento = document.getElementById(elementId);
     elemento.textContent = mensaje;
@@ -43,13 +37,14 @@ const iniciarSesion = async (e) => {
           body: JSON.stringify(body)
       })
   
-      if (res.ok) {
-        const data = await res.json()
-        localStorage.setItem('user', JSON.stringify(data))
-        window.location.href = '/vista-previa'
-      } else {
-        mostrarMensaje('login-mensaje', 'El usuario no existe, cree uno o pruebe con otras credenciales', 'error')
-      }
+      if (!res.ok) {
+          mostrarMensaje('login-mensaje', 'El usuario no existe, cree uno o pruebe con otras credenciales', 'error')
+          return;
+        } else {
+            const data = await res.json()
+            localStorage.setItem('user', JSON.stringify(data))
+            window.location.href = '/vista-previa'
+        }
     } catch (e) {
       mostrarMensaje('login-mensaje', 'Las credenciales no son válidas o el usuario no existe. Pruebe de nuevo o cree un nuevo usuario en caso de no tener uno', 'error')
     }
@@ -113,3 +108,11 @@ function cambiarTab(tab) {
         document.getElementById('registro-form').classList.add('active');
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    $loginEmail.innerText = ""
+    $loginEmail.innerText = ""
+    $registerPassword.innerText = ""
+    $registerName.innerText = ""
+    $registerEmail.innerText = ""
+})

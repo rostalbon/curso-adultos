@@ -4,7 +4,7 @@ function comenzarCurso() {
 
 function cerrarSesion() {
     if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
-        localStorage.removeItem('usuarioActual');
+        localStorage.clear();
         window.location.href = '/';
     }
 }
