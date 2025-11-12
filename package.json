@@ -1,0 +1,21 @@
+{
+  "name": "curso-adultos",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch ./server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rostalbon/curso-adultos.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "5.1.0",
+    "mysql2": "^3.15.3"
+  }
+}
