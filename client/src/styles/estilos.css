@@ -63,8 +63,12 @@
     background: white;
     padding: 20px;
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-    overflow-y: auto;
-    max-height: calc(100vh - 60px);
+    height: 100%;
+    border-bottom-right-radius: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
 }
 
 .sidebar h3 {
@@ -120,10 +124,13 @@
 .evaluacion-item {
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     color: white;
-    padding: 15px;
+    padding: 18px;
     border-radius: 8px;
     cursor: pointer;
-    margin-top: 20px;
+    border: 0px solid black;
+    margin-top: 12px;
+    margin-right: 8px;
+    font-size: 1rem;
     text-align: center;
     font-weight: 600;
     transition: transform 0.3s;
@@ -367,8 +374,10 @@
 
 .container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 2rem auto;
     padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .section-title {
@@ -464,6 +473,7 @@
     font-size: 1.1em;
     margin-bottom: 25px;
     opacity: 0.95;
+    padding-inline: 160px;
 }
 
 .stats {

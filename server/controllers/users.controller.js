@@ -39,8 +39,6 @@ export const updateProgress = async (req, res) => {
 
   const actualProgress = await connection.query('SELECT progress FROM users WHERE email = ?;', [email])
 
-  // console.log(actualProgress[0][0].progress)
-
   if (typeof parseInt(JSON.parse(newProgress)) !== 'number') res.status(400).json({ message: 'El nuevo progreso debe ser un valor numérico' })
     
   if (parseInt(JSON.parse(newProgress)) > 100 && parseInt(JSON.parse(newProgress)) < 0) res.status(400).json({ message: 'El nuevo progreso no puede salirse del rango entre 0 y 100' })
@@ -48,9 +46,9 @@ export const updateProgress = async (req, res) => {
   if ((actualProgress[0][0].progress) > (newProgress * 16)) {
     return res.status(400).json({ message: 'No se puede reducir el progreso' })
   } else {
-    verifyProgress = newProgress < 6 ? newProgress * 16 : 100;
+    const verifyProgress = newProgress < 6 ? newProgress * 16 : 100;
     connection.query('UPDATE users SET progress = ? WHERE email = ?;', [verifyProgress, email])
     .then(result => res.status(200).json({ message: 'Se actualizó correctamente el progreso' }))
-    .catch(e => res.status(500).json({ message: 'Hubo un problema inesperado' }))
+    .catch(e => res.status(500).json({ message: 'Hubo un problema inesperado', error: e }))
   }
 }
