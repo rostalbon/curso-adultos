@@ -1,0 +1,6 @@
+# Carpetas
+.vscode/
+node_modules/
+
+# Variables de entorno
+.env

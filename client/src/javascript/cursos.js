@@ -1,123 +1,14 @@
-function cambiarTab(tab) {
-    const tabs = document.querySelectorAll('.tab');
-    const forms = document.querySelectorAll('.form-content');
-    
-    tabs.forEach(t => t.classList.remove('active'));
-    forms.forEach(f => f.classList.remove('active'));
-    
-    if (tab === 'login') {
-        tabs[0].classList.add('active');
-        document.getElementById('login-form').classList.add('active');
-    } else {
-        tabs[1].classList.add('active');
-        document.getElementById('registro-form').classList.add('active');
-    }
-}
-
-function mostrarMensaje(elementId, mensaje, tipo) {
-    const elemento = document.getElementById(elementId);
-    elemento.textContent = mensaje;
-    elemento.className = `mensaje ${tipo}`;
-    elemento.style.display = 'block';
-    
-    setTimeout(() => {
-        elemento.style.display = 'none';
-    }, 3000);
-}
-
-function iniciarSesion(e) {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    
-    const usuarioGuardado = localStorage.getItem('usuario_' + email);
-    
-    if (usuarioGuardado) {
-        const usuario = JSON.parse(usuarioGuardado);
-        if (usuario.password === password) {
-            localStorage.setItem('usuarioActual', JSON.stringify(usuario));
-            mostrarMensaje('login-mensaje', '¡Inicio de sesión exitoso! Redirigiendo...', 'exito');
-            setTimeout(() => {
-                window.location.href = 'vista-previa.html';
-            }, 1500);
-        } else {
-            mostrarMensaje('login-mensaje', 'Contraseña incorrecta', 'error');
-        }
-    } else {
-        mostrarMensaje('login-mensaje', 'Usuario no encontrado', 'error');
-    }
-}
-
-function registrar(e) {
-    e.preventDefault();
-    const nombre = document.getElementById('reg-nombre').value;
-    const email = document.getElementById('reg-email').value;
-    const password = document.getElementById('reg-password').value;
-    
-    if (localStorage.getItem('usuario_' + email)) {
-        mostrarMensaje('reg-mensaje', 'Este correo ya está registrado', 'error');
-        return;
-    }
-    
-    const usuario = {
-        nombre: nombre,
-        email: email,
-        password: password,
-        progreso: {}
-    };
-    
-    localStorage.setItem('usuario_' + email, JSON.stringify(usuario));
-    mostrarMensaje('reg-mensaje', '¡Cuenta creada exitosamente! Cambiando a inicio de sesión...', 'exito');
-    
-    setTimeout(() => {
-        cambiarTab('login');
-        document.getElementById('login-email').value = email;
-    }, 1500);
-}
-
-function entrarInvitado() {
-    const invitado = {
-        nombre: 'Invitado',
-        email: 'invitado@temp.com',
-        esInvitado: true,
-        progreso: {}
-    };
-    
-    localStorage.setItem('usuarioActual', JSON.stringify(invitado));
-    window.location.href = 'vista-previa.html';
-}
-
-window.onload = function() {
-    const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
-    if (!usuarioActual) {
-        window.location.href = 'index.html';
-        return;
-    }
-    document.getElementById('nombre-usuario').textContent = usuarioActual.nombre;
-};
-
-function comenzarCurso() {
-    window.location.href = 'curso.html';
-}
-
-function cerrarSesion() {
-    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
-        localStorage.removeItem('usuarioActual');
-        window.location.href = 'index.html';
-    }
-}
-
 const unidades = [
     {
         id: 1,
-        titulo: "Introducción al curso",
-        icono: "🌐",
+        titulo: "Introducción a las Herramientas Digitales",
+        icono: "💻",
         duracion: "45 min",
         descripcion: "Conoce el mundo digital, sus conceptos fundamentales y las herramientas básicas que utilizarás en tu día a día.",
         lecciones: [
             {
                 titulo: "¿Qué son las herramientas digitales?",
-                contenido: "La computadora es una herramienta muy útil para trabajar hoy en día. Al aprender a usarla de forma correcta y eficiente podemos abrirnos puertas a puestos y dinámicas de trabajo distintas, modernas y mucho más amplias. Actualmente, el buen uso de los dispositivos electrónicos en el trabajo nos suma muchos puntos para nuestro perfil como trabajador, son herramientas casi esenciales. En esta unidad vamos a abarcar el uso básico de la computadora, es una sección importante ya que no solo nos va a sumar un desarrollo propio, sino también saberes especialmente necesarios para las unidades siguientes.\nLas herramientas digitales son programas, aplicaciones y servicios que nos permiten realizar tareas de manera más eficiente en el mundo digital. Incluyen software de productividad, comunicación, almacenamiento y más.",
+                contenido: "Las herramientas digitales son programas, aplicaciones y servicios que nos permiten realizar tareas de manera más eficiente en el mundo digital. Incluyen software de productividad, comunicación, almacenamiento y más.",
                 puntos: ["Definición de herramientas digitales", "Importancia en el mundo actual", "Clasificación de herramientas", "Beneficios de su uso"]
             },
             {
@@ -134,8 +25,8 @@ const unidades = [
     },
     {
         id: 2,
-        titulo: "Uso básico de la computadora",
-        icono: "💻",
+        titulo: "Correo Electrónico y Comunicación",
+        icono: "📧",
         duracion: "50 min",
         descripcion: "Aprende a gestionar tu correo electrónico de manera efectiva y a comunicarte profesionalmente en línea.",
         lecciones: [
@@ -182,7 +73,7 @@ const unidades = [
     },
     {
         id: 4,
-        titulo: "Presentaciones",
+        titulo: "Hojas de Cálculo",
         icono: "📊",
         duracion: "70 min",
         descripcion: "Aprende a organizar datos, crear fórmulas y generar gráficos con Excel y Google Sheets.",
@@ -206,8 +97,8 @@ const unidades = [
     },
     {
         id: 5,
-        titulo: "Hojas de cálculo",
-        icono: "📈",
+        titulo: "Presentaciones Digitales",
+        icono: "🎨",
         duracion: "55 min",
         descripcion: "Crea presentaciones impactantes con PowerPoint, Google Slides y otras herramientas visuales.",
         lecciones: [
@@ -230,7 +121,7 @@ const unidades = [
     },
     {
         id: 6,
-        titulo: "Herramientas compartidas de Google",
+        titulo: "Almacenamiento en la Nube",
         icono: "☁️",
         duracion: "40 min",
         descripcion: "Descubre cómo guardar, compartir y colaborar en archivos usando servicios en la nube.",
@@ -252,96 +143,125 @@ const unidades = [
             }
         ]
     }
-];
+    ];
 
 const preguntasEvaluacion = [
-    {
-        pregunta: "¿Cuál es la principal ventaja de usar herramientas digitales?",
-        opciones: ["Son gratuitas", "Aumentan la eficiencia", "No requieren internet", "Son difíciles de usar"],
-        correcta: 1
-    },
-    {
-        pregunta: "¿Qué característica es esencial en una contraseña segura?",
-        opciones: ["Debe ser corta", "Debe tener mayúsculas, minúsculas y números", "Debe ser tu fecha de nacimiento", "Debe ser fácil de recordar"],
-        correcta: 1
-    },
-    {
-        pregunta: "¿Cuál es la mejor práctica para organizar el correo electrónico?",
-        opciones: ["Dejar todo en la bandeja de entrada", "Usar carpetas y etiquetas", "Eliminar todos los correos", "No leer los correos"],
-        correcta: 1
-    },
-    {
-        pregunta: "En un procesador de texto, ¿para qué sirven los estilos?",
-        opciones: ["Dar formato consistente", "Aumentar el tamaño del archivo", "Dificultar la lectura", "Eliminar texto"],
-        correcta: 0
-    },
-    {
-        pregunta: "¿Qué función de Excel suma todos los valores de un rango?",
-        opciones: ["PROMEDIO", "SUMA", "MAX", "CONTAR"],
-        correcta: 1
-    },
-    {
-        pregunta: "En presentaciones, ¿cuál es un principio de diseño importante?",
-        opciones: ["Usar muchos colores", "Simplicidad y claridad", "Mucho texto en cada diapositiva", "Animaciones en todo"],
-        correcta: 1
-    },
-    {
-        pregunta: "¿Qué permite el almacenamiento en la nube?",
-        opciones: ["Acceder desde cualquier dispositivo", "Solo guardar imágenes", "No compartir archivos", "Usar solo en un dispositivo"],
-        correcta: 0
-    },
-    {
-        pregunta: "¿Qué es una tabla dinámica en hojas de cálculo?",
-        opciones: ["Una tabla que no se puede editar", "Una herramienta para analizar datos", "Un tipo de gráfico", "Una función matemática"],
-        correcta: 1
-    },
-    {
-        pregunta: "¿Cuál es la ventaja de Google Docs sobre Word tradicional?",
-        opciones: ["Es más caro", "Permite colaboración en tiempo real", "Solo funciona offline", "No se puede compartir"],
-        correcta: 1
-    },
-    {
-        pregunta: "¿Qué es el formato condicional en hojas de cálculo?",
-        opciones: ["Un tipo de fórmula", "Formato que cambia según el valor de la celda", "Una función de texto", "Un gráfico especial"],
-        correcta: 1
-    }
+{
+    pregunta: "¿Cuál es la principal ventaja de usar herramientas digitales?",
+    opciones: ["Son gratuitas", "Aumentan la eficiencia", "No requieren internet", "Son difíciles de usar"],
+    correcta: 1
+},
+{
+    pregunta: "¿Qué característica es esencial en una contraseña segura?",
+    opciones: ["Debe ser corta", "Debe tener mayúsculas, minúsculas y números", "Debe ser tu fecha de nacimiento", "Debe ser fácil de recordar"],
+    correcta: 1
+},
+{
+    pregunta: "¿Cuál es la mejor práctica para organizar el correo electrónico?",
+    opciones: ["Dejar todo en la bandeja de entrada", "Usar carpetas y etiquetas", "Eliminar todos los correos", "No leer los correos"],
+    correcta: 1
+},
+{
+    pregunta: "En un procesador de texto, ¿para qué sirven los estilos?",
+    opciones: ["Dar formato consistente", "Aumentar el tamaño del archivo", "Dificultar la lectura", "Eliminar texto"],
+    correcta: 0
+},
+{
+    pregunta: "¿Qué función de Excel suma todos los valores de un rango?",
+    opciones: ["PROMEDIO", "SUMA", "MAX", "CONTAR"],
+    correcta: 1
+},
+{
+    pregunta: "En presentaciones, ¿cuál es un principio de diseño importante?",
+    opciones: ["Usar muchos colores", "Simplicidad y claridad", "Mucho texto en cada diapositiva", "Animaciones en todo"],
+    correcta: 1
+},
+{
+    pregunta: "¿Qué permite el almacenamiento en la nube?",
+    opciones: ["Acceder desde cualquier dispositivo", "Solo guardar imágenes", "No compartir archivos", "Usar solo en un dispositivo"],
+    correcta: 0
+},
+{
+    pregunta: "¿Qué es una tabla dinámica en hojas de cálculo?",
+    opciones: ["Una tabla que no se puede editar", "Una herramienta para analizar datos", "Un tipo de gráfico", "Una función matemática"],
+    correcta: 1
+},
+{
+    pregunta: "¿Cuál es la ventaja de Google Docs sobre Word tradicional?",
+    opciones: ["Es más caro", "Permite colaboración en tiempo real", "Solo funciona offline", "No se puede compartir"],
+    correcta: 1
+},
+{
+    pregunta: "¿Qué es el formato condicional en hojas de cálculo?",
+    opciones: ["Un tipo de fórmula", "Formato que cambia según el valor de la celda", "Una función de texto", "Un gráfico especial"],
+    correcta: 1
+}
 ];
 
-let progresoUsuario = {};
-let usuarioActual = null;
+const usuarioGuardado = JSON.parse(localStorage.getItem('user'))
+const nombreUsuarioActual = usuarioGuardado[0].name
+const emailUsuarioActual = usuarioGuardado[0].email
 
-window.onload = function() {
-    usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
-    if (!usuarioActual) {
-        window.location.href = 'index.html';
-        return;
+const cargarProgreso = async () => {
+    try {
+        const usuarioProgreso = await fetch(`/user/get-progress/${nombreUsuarioActual}`)
+        
+        if (!usuarioProgreso.ok) return
+
+        return await usuarioProgreso.json()
+    } catch (e) {
+        return e
     }
-    
-    cargarProgreso();
-    generarMenu();
-    actualizarProgresoGeneral();
-    mostrarUnidad(1);
-};
-
-function cargarProgreso() {
-    const usuarioKey = 'usuario_' + usuarioActual.email;
-    const usuario = JSON.parse(localStorage.getItem(usuarioKey));
-    progresoUsuario = usuario.progreso || {};
 }
 
-function guardarProgreso() {
-    const usuarioKey = 'usuario_' + usuarioActual.email;
-    const usuario = JSON.parse(localStorage.getItem(usuarioKey));
-    usuario.progreso = progresoUsuario;
-    localStorage.setItem(usuarioKey, JSON.stringify(usuario));
+// Esto es una promesa a resolver, por lo que hay que usar un async await para trabajar con progresoActual
+const progresoActual = cargarProgreso()
+
+
+function guardarProgreso(unidad) {
+    // el nuevo progreso es el número de la unidad completada, en el backend el mismo número se calcula para poder dar un porcentaje de completado un poco exacto.
+    const body = {
+        email: emailUsuarioActual,
+        newProgress: unidad,
+    }
+
+    fetch(`/user/update-progress`, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method: 'post',
+        body: JSON.stringify(body)
+    })
+    .catch(e => console.log(e))
 }
 
-function generarMenu() {
+const setUserProgress = async () => {
+    const actualProgressResolved = await progresoActual
+    return `unidad_${actualProgressResolved.progress}`
+}
+
+const progresoUsuario = setUserProgress()
+
+const supuestoProgresoUsuario = progresoActual.then(res => {
+return {
+    unidad_1: res.progress >= 16,
+    unidad_2: res.progress >= (16 * 2),
+    unidad_3: res.progress >= (16 * 3),
+    unidad_4: res.progress >= (16 * 4),
+    unidad_5: res.progress >= (16 * 5),
+    unidad_6: res.progress === 100,
+}
+})
+
+const unidadesCompletas = supuestoProgresoUsuario.then(r => Object.values(r).filter(isCompleted => isCompleted).length)
+
+async function generarMenu() {
     const menuContainer = document.getElementById('menu-unidades');
-    unidades.forEach(unidad => {
+    menuContainer.innerHTML = ''
+    unidades.forEach(async (unidad) => {
         const item = document.createElement('div');
         item.className = 'unidad-item';
-        if (progresoUsuario['unidad_' + unidad.id]) {
+        if (await unidadesCompletas >= unidad.id) {
             item.classList.add('completada');
         }
         item.innerHTML = `
@@ -353,15 +273,15 @@ function generarMenu() {
     });
 }
 
-function mostrarUnidad(id) {
+const mostrarUnidad = async (id) => {
     const unidad = unidades.find(u => u.id === id);
     const contenido = document.getElementById('contenido-curso');
-    
+
     document.querySelectorAll('.unidad-item').forEach((item, index) => {
         item.classList.remove('active');
         if (index === id - 1) item.classList.add('active');
     });
-    
+
     let html = `
         <div class="contenido-unidad active">
             <div class="unidad-header">
@@ -369,7 +289,7 @@ function mostrarUnidad(id) {
                 <p>${unidad.descripcion}</p>
             </div>
     `;
-    
+
     unidad.lecciones.forEach((leccion, index) => {
         html += `
             <div class="leccion">
@@ -380,48 +300,51 @@ function mostrarUnidad(id) {
                 </ul>
             </div>
         `;
-    });
-    
-    const completada = progresoUsuario['unidad_' + id];
+    })
+
+    // const completada = supuestoProgresoUsuario['unidad_' + id]
+    const completada = await unidadesCompletas >= id
+
     html += `
         <button class="btn-completar" onclick="completarUnidad(${id})" ${completada ? 'disabled' : ''}>
             ${completada ? '✓ Unidad Completada' : 'Marcar como Completada'}
         </button>
         </div>
     `;
-    
-    contenido.innerHTML = html;
+
+    contenido.innerHTML = html
 }
 
-function completarUnidad(id) {
-    progresoUsuario['unidad_' + id] = true;
-    guardarProgreso();
-    generarMenu();
-    mostrarUnidad(id);
-    actualizarProgresoGeneral();
-}
 
-function actualizarProgresoGeneral() {
+
+async function actualizarProgresoGeneral() {
     const totalUnidades = unidades.length;
-    const completadas = Object.keys(progresoUsuario).filter(k => k.startsWith('unidad_')).length;
-    const porcentaje = Math.round((completadas / totalUnidades) * 100);
-    document.getElementById('progreso-porcentaje').textContent = porcentaje + '%';
-    
+    // const completadas = Object.keys(supuestoProgresoUsuario).filter(k => k.startsWith('unidad_')).length;
+    document.getElementById('progreso-porcentaje').textContent = [await progresoActual][0].progress + '%';
+
     const evaluacionBtn = document.getElementById('menu-evaluacion');
-    if (completadas === totalUnidades) {
+    if (await unidadesCompletas === totalUnidades) {
+        evaluacionBtn.removeAttribute('disabled')
         evaluacionBtn.classList.remove('bloqueada');
     } else {
+        evaluacionBtn.setAttribute('disabled', true)
         evaluacionBtn.classList.add('bloqueada');
     }
 }
 
-function mostrarEvaluacion() {
-    const completadas = Object.keys(progresoUsuario).filter(k => k.startsWith('unidad_')).length;
-    if (completadas < unidades.length) {
-        alert('Debes completar todas las unidades antes de realizar la evaluación final.');
-        return;
-    }
-    
+function completarUnidad(id) {
+    guardarProgreso(id);
+    actualizarProgresoGeneral();
+    generarMenu();
+    mostrarUnidad(id);
+    const $btnCompletar = document.querySelector('.btn-completar')
+    $btnCompletar.innerHTML = "Guardando progreso..."
+    setTimeout(() => {
+        location.reload()
+    }, 3000);
+}
+
+const mostrarEvaluacion = async () => {
     const contenido = document.getElementById('contenido-curso');
     let html = `
         <div class="evaluacion-container">
@@ -429,7 +352,7 @@ function mostrarEvaluacion() {
             <p>Responde las siguientes preguntas. Necesitas 70% o más para aprobar.</p>
             <form id="form-evaluacion" onsubmit="evaluarExamen(event)">
     `;
-    
+
     preguntasEvaluacion.forEach((pregunta, index) => {
         html += `
             <div class="pregunta">
@@ -445,37 +368,40 @@ function mostrarEvaluacion() {
             </div>
         `;
     });
-    
+
     html += `
             <button type="submit" class="btn-completar">Enviar Evaluación</button>
             </form>
         </div>
     `;
-    
+
     contenido.innerHTML = html;
 }
 
 function evaluarExamen(e) {
     e.preventDefault();
     let correctas = 0;
-    
+
     preguntasEvaluacion.forEach((pregunta, index) => {
         const respuesta = document.querySelector(`input[name="pregunta${index}"]:checked`).value;
         if (parseInt(respuesta) === pregunta.correcta) {
             correctas++;
         }
     });
-    
+
     const porcentaje = Math.round((correctas / preguntasEvaluacion.length) * 100);
     const aprobado = porcentaje >= 70;
-    
-    progresoUsuario.evaluacion = {
+
+    supuestoProgresoUsuario.evaluacion = {
         completada: true,
         puntuacion: porcentaje,
         aprobado: aprobado
     };
-    guardarProgreso();
-    
+
+    const ultimaUnidad = 6
+
+    guardarProgreso(ultimaUnidad)
+
     mostrarResultado(correctas, preguntasEvaluacion.length, porcentaje, aprobado);
 }
 
@@ -493,6 +419,11 @@ function mostrarResultado(correctas, total, porcentaje, aprobado) {
     `;
 }
 
-function volverVista() {
-    window.location.href = 'vista-previa.html';
+const volverVista = () => {
+    window.location.href = '/vista-previa';
 }
+
+cargarProgreso();
+generarMenu();
+actualizarProgresoGeneral();
+mostrarUnidad(1);

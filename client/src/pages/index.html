@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acceso - Curso Herramientas Digitales</title>
-    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="/estilos.css">
 </head>
 <body class="index">
     <div class="container">
@@ -28,8 +28,8 @@
                 </div>
 
                 <div class="tabs">
-                    <div class="tab active" onclick="cambiarTab('login')">Iniciar Sesión</div>
-                    <div class="tab" onclick="cambiarTab('registro')">Registrarse</div>
+                    <div class="tab active" onclick="cambiarTab('login')" >Iniciar Sesión</div>
+                    <div class="tab" onclick="cambiarTab('registro')" >Registrarse</div>
                 </div>
 
                 <div id="login-form" class="form-content active">
@@ -48,8 +48,8 @@
                 </div>
 
                 <div id="registro-form" class="form-content">
-                    <form onsubmit="registrar(event)">
-                        <div class="form-group">
+                    <form>
+                        <div class="form-group" onsubmit="register(event)" >
                             <label for="reg-nombre">Nombre Completo</label>
                             <input type="text" id="reg-nombre" required>
                         </div>
@@ -61,7 +61,7 @@
                             <label for="reg-password">Contraseña</label>
                             <input type="password" id="reg-password" required minlength="6">
                         </div>
-                        <button type="submit" class="btn">Crear Cuenta</button>
+                        <button type="submit" id="register-button" class="btn">Crear Cuenta</button>
                         <div id="reg-mensaje" class="mensaje"></div>
                     </form>
                 </div>
@@ -73,7 +73,6 @@
             </div>
         </div>
     </div>
-
-    <script src="javascript.js"></script>
+    <script src="/indexFunctions.js"></script>
 </body>
 </html>
