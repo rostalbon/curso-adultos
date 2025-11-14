@@ -30,8 +30,6 @@ server (carpeta de todo el backend, el servidor, las funcionalidades del backend
   - routes
     - users.routes.js (archivo con las rutas de la url del servidor)
 
-**Cabe aclarar que por ahora la base de datos funciona únicamente de manera local, falta desplegarla así se puede usar en línea**
-
 UNIDAD #1 - INTRODUCCIÓN AL CURSO
 
 UNIDAD #2 - USO BÁSICO DE LA COMPUTADORA 

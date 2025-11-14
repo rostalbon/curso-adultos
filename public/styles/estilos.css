@@ -539,6 +539,7 @@
     color: white;
     padding: 50px 40px;
     flex: 1;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -720,5 +721,11 @@
 
     .form-section {
         padding: 30px 25px;
+    }
+
+    .evaluacion-card {
+        p {
+            padding: 0;
+        }
     }
 }
