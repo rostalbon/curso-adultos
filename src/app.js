@@ -28,6 +28,8 @@ app.on('error', (error) => console.error('Server error', error))
 
 export default (req, res) => app(req, res);
 
-app.listen(PORT, () => {
-  console.log(`App running on port ${PORT}`)
-})
+if (process.env.DEV_ENV) {
+  app.listen(PORT, () => {
+    console.log(`App running on port ${PORT}`)
+  })
+}
