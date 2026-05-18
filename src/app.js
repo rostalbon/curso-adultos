@@ -26,7 +26,7 @@ app.use(users)
 
 app.on('error', (error) => console.error('Server error', error))
 
-export default (req, res) => app(req, res);
+// export default (req, res) => app(req, res);
 
 if (process.env.DEV_ENV) {
   app.listen(PORT, () => {
