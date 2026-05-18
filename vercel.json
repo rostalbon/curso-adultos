@@ -1,5 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "express",
   "installCommand": "pnpm install",
+  "devCommand": "pnpm dev",
   "version": 2
 }
